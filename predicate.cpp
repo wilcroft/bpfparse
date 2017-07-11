@@ -7,3 +7,9 @@ BpfPredicate::BpfPredicate(enum BPFproto p, enum BPFdir d, enum BPFtype t, int v
 	value = v;
 }
 
+BpfPredicate::BpfPredicate() {
+	proto = BPFprotoAll;
+	dir = BPFdirOR;
+	type = BPFtypeHost;
+	value = 0;
+}

@@ -1,12 +1,16 @@
 #pragma once
 #include <list>
 #include <string>
-#include "predicate.cpp"
+#include <iostream>
+#include "predicate.h"
+#include "istring.h"
+#include "stack.h"
+
 
 class BpfRule{
 	std::list<BpfPredicate> predlist;
 
 public:
 	void addRule(enum BPFproto p, enum BPFdir d, enum BPFtype type, int value);
-//	addRule(std::string s);
+	void addRule(istring::istring s);
 };

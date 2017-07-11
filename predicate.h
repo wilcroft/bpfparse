@@ -1,5 +1,11 @@
 #pragma once
 
+enum BPFprimatives {
+	BPFprimDir,
+	BPFprimProto,
+	BPFprimType
+};
+
 enum BPFdir {
 	BPFdirOR,
 	BPFdirAND,
@@ -8,6 +14,7 @@ enum BPFdir {
 };
 
 enum BPFproto {
+	BPFprotoAll,
 	BPFprotoEther,
 //	BPFprotoFddi,
 //	BPFprotoTr,
@@ -30,11 +37,13 @@ enum BPFtype {
 
 class BpfPredicate {
 
+public:
+
 	enum BPFproto proto;
 	enum BPFdir dir;
 	enum BPFtype type;
 	int value;
 
-public:
+	BpfPredicate();
 	BpfPredicate(enum BPFproto p, enum BPFdir d, enum BPFtype t, int v);
 };
