@@ -1,10 +1,6 @@
 #include "istring.h"
 
-bool istring::istring::operator==(string s) {
 
-	return toLower(s) == toLower(*this);
-
-}
 namespace istring {
 	istring::istring() {};
 	istring::istring(std::string s) : string(s) { }// *this = s; };
@@ -12,6 +8,13 @@ namespace istring {
 	istring::istring(std::string s, size_t pos, size_t len) : string(s, pos, len) {  }
 	//istring::istring::istring(char c): string (c) { };//*this = c; };
 
+	bool istring::operator==(string s) {
+		return toLower(s) == toLower(*this);
+	}
+	bool istring::operator==(const char c[]) {
+		string s(c);
+		return toLower(s) == toLower(*this);
+	}
 
 	size_t istring::ifind(string s, size_t npos) {
 
@@ -36,8 +39,8 @@ namespace istring {
 		return s;
 	}
 
-	std::list<string> tokenize(istring s, istring token) {
-		std::list<string> l;
+	std::list<istring> tokenize(istring s, istring token) {
+		std::list<istring> l;
 		if (token == ws) {
 			size_t pos;
 			while (!s.empty()) {
@@ -56,5 +59,14 @@ namespace istring {
 			}
 		}
 		return l;
+	}
+
+// Replace the list item at it with the contents of list r
+// Returns an iterator to the item
+	std::list<istring>::iterator replace(std::list<istring>& s, std::list<istring>::iterator it, std::list<istring> r) {
+		std::list<istring>::iterator iret;
+		iret = s.insert(it, r.begin(), r.end());
+		s.erase(it);
+		return iret;
 	}
 }

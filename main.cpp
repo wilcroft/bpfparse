@@ -20,6 +20,8 @@ int main(void){
 	rule.addRule("A or (B and (G or H))");
 	std::cout << std::endl;
 	rule.addRule("(((A or B)))");
+	std::cout << std::endl;
+	rule.addRule("UDP port 5060 and ip and (dst net 160.96.0.0/12)");
 
 	return 0;
 }

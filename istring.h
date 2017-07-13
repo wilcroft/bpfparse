@@ -10,6 +10,8 @@ namespace istring {
 	public:
 
 		bool operator==(string s);
+//		bool operator==(const char* c);
+		bool operator==(const char c[]);
 		istring();
 		istring(std::string s);
 		istring(char cp[]);
@@ -22,5 +24,6 @@ namespace istring {
 	static istring ws;
 
 	string toLower(string s);
-	std::list<string> tokenize(istring s, istring token = ws);
+	std::list<istring> tokenize(istring s, istring token = ws);
+	std::list<istring>::iterator replace(std::list<istring>& s, std::list<istring>::iterator it, std::list<istring> r);
 }
