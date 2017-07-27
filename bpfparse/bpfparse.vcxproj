@@ -117,10 +117,12 @@
     <ClCompile Include="..\stack.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\eth_constants.h" />
     <ClInclude Include="..\istring.h" />
     <ClInclude Include="..\predicate.h" />
     <ClInclude Include="..\rule.h" />
     <ClInclude Include="..\stack.h" />
+    <ClInclude Include="..\ternary.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

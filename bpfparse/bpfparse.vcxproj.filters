@@ -44,5 +44,11 @@
     <ClInclude Include="..\stack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\eth_constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ternary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

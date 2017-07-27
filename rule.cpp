@@ -50,8 +50,8 @@ void BpfRule::addRule(istring::istring s) {
 		}
 		// expand ip protocol type
 		else if ((*it == "tcp" || *it == "udp" || *it == "icmp")
-			&& (it == items.begin() || *((--it)++) != "proto")
-			&& (it == items.end() || *((++it)--) != "proto")) {
+					&& (it == items.begin() || *((--it)++) != "proto")
+					&& (it == items.end() || *((++it)--) != "proto")) {
 			std::list<istring::istring> toinsert;
 			toinsert.push_back("(");
 			toinsert.push_back("ip");

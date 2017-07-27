@@ -1,4 +1,7 @@
 #pragma once
+#include <vector>
+#include "ternary.h"
+#include "eth_constants.h"
 
 enum BPFprimatives {
 	BPFprimDir,
@@ -32,7 +35,8 @@ enum BPFtype {
 	BPFtypeHost,
 	BPFtypeNet,
 	BPFtypePort,
-	BPFtypePortrange
+	BPFtypePortrange,
+	BPFtypeLength
 };
 
 class BpfPredicate {
@@ -43,6 +47,17 @@ public:
 	enum BPFdir dir;
 	enum BPFtype type;
 	int value;
+	std::vector<ternary> src_mac;
+	std::vector<ternary> dest_mac;
+	std::vector<ternary> vlan_mac;
+	std::vector<ternary> ethertype;
+	std::vector<ternary> ether_proto;
+	std::vector<ternary> src_ip_addr;
+	std::vector<ternary> dest_ip_addr;
+	std::vector<ternary> ip_proto;
+	short length;
+
+
 
 	BpfPredicate();
 	BpfPredicate(enum BPFproto p, enum BPFdir d, enum BPFtype t, int v);

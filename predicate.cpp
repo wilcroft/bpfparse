@@ -12,4 +12,12 @@ BpfPredicate::BpfPredicate() {
 	dir = BPFdirOR;
 	type = BPFtypeHost;
 	value = 0;
+
+	src_mac.resize(SIZE_MAC);
+	dest_mac.resize(SIZE_MAC);
+	vlan_mac.resize(SIZE_VLAN);
+	ether_proto.resize(SIZE_ETHER_PROTO);
+	src_ip_addr.resize(SIZE_IPV4_ADDR);
+	dest_ip_addr.resize(SIZE_IPV4_ADDR);
+	ip_proto.resize(SIZE_IPV_PROTO);
 }
