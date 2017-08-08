@@ -1,5 +1,5 @@
 #pragma once
-#include "istring.h"
+//#include "istring.h"
 #include <vector>
 #include <map>
 
@@ -50,7 +50,7 @@
 
 // Valid keywords
 
-const std::vector<istring::istring> primatives = {
+/*const std::vector<istring::istring> primatives = {
 	"dst",
 	"src",
 	"host",
@@ -78,4 +78,4 @@ const std::vector<istring::istring> primatives = {
 	"broadcast"
 
 
-};
+};*/

@@ -14,7 +14,7 @@ int main() {
 	std::cout << (i2 == i3 ? "true" : "false") << std::endl;
 	std::cout << (i3 == i2 ? "true" : "false") << std::endl;
 
-	std::list<std::string> l = istring::tokenize("Hi There   friends\t! ", istring::ws);
+	std::list<istring::istring> l = istring::tokenize("Hi There   friends\t! ", istring::ws);
 	for (auto&s : l) std::cout << s << "+";
 	std::cout << std::endl; 
 	l = istring::tokenize("Ifoomissedfooyoufoofoo!", "foo");

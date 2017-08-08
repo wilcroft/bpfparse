@@ -115,6 +115,7 @@
     <ClCompile Include="..\predicate.cpp" />
     <ClCompile Include="..\rule.cpp" />
     <ClCompile Include="..\stack.cpp" />
+    <ClCompile Include="..\ternary.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\eth_constants.h" />

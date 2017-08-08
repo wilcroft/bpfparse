@@ -16,8 +16,11 @@ struct stack {
 };
 
 struct stacks {
-
+private:
 	std::vector <stack> st;
+
+public:
+	std::vector <std::list<std::string>> preds;
 
 	stacks();
 	void open();

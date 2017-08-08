@@ -6,20 +6,11 @@ void BpfRule::addRule(enum BPFproto p, enum BPFdir d, enum BPFtype t, int v){
 
 void BpfRule::addRule(istring::istring s) {
 
-/*	std::list<std::string> subrules;
-	size_t pos;
-	while ((pos = s.ifind(" and ")) != std::string::npos) {
-		subrules.push_back(s.substr(0, pos));
-		s.erase(0, pos+5);
-	}
-	subrules.push_back(s);
-
-	for (auto x : subrules) {
-		std::cout << x << std::endl;
-	}
-*/
+// First, we split the rule string into substrings on whitespace
 	std::list<istring::istring> items = istring::tokenize(s);
 
+// Next, we put brackets into separate string elements to make parsing easier
+// We also expand some keywords that are short fords for longer expressions
 	for (std::list<istring::istring>::iterator it = items.begin(); it != items.end(); it++) {
 		// Separate grouped/unspaced brackets
 		if (*it != "(" && it->find("(") != std::string::npos) {
@@ -67,6 +58,9 @@ void BpfRule::addRule(istring::istring s) {
 
 	}
 
+// Now that we have the expanded form of the rule, we decompose it into individual terms
+// That means decomposing the brackets and separating on ORs
+// We use a stack to do this
 	struct stacks stk;
 
 	for (auto &i : items) {
@@ -76,26 +70,32 @@ void BpfRule::addRule(istring::istring s) {
 		else if (i == ")") {
 			stk.close();
 		}
-	//	if (i == "and") {
-//
-	//	}
 		else if (i == "or") {
 			stk.newpred();
 		}
 		else stk.addpred(i);
 	}
+	stk.close();
 
-	for (auto& i : stk.st[0].preds) {
+// Parse the terms
+	for (auto &i : stk.preds) {
 		for (auto& str : i) {
 			std::cout << str << " ";
 		}
 		std::cout << std::endl;
-	}
-	for (auto& i : stk.st[0].active) {
+
+		BpfPredicate pred;
+		std::list<std::string> preds;
+		preds.emplace_back("");
 		for (auto& str : i) {
-			std::cout << str << " ";
+			if ((istring::istring)str == "and") preds.emplace_back("");
+			else preds.back() = preds.back() + " " + str;
 		}
-		std::cout << std::endl;
+		if (preds.back() == "") {
+			std::cerr << "Unexpected Error in rule parsing! Exiting..." << std::endl;
+			exit(-1);
+		}
+
 	}
 
 }

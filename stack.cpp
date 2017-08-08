@@ -71,6 +71,14 @@ void stacks::close() {
 		st.pop_back();
 		st.emplace_back(newstack);
 	}
+	else {
+		for (auto& t : st[0].preds) {
+			preds.emplace_back(t);
+		}
+		for (auto& t : st[0].active) {
+			preds.emplace_back(t);
+		}
+	}
 }
 
 void stacks::addpred(std::string s) {
