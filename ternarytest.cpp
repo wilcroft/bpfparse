@@ -4,6 +4,7 @@
 
 int main() {
 
+	using tern::ternary;
 	ternary t1;
 	ternary t2(ternary::TERN_0);
 	ternary t3(true);

@@ -5,6 +5,7 @@
 #include "predicate.h"
 #include "istring.h"
 #include "stack.h"
+#include "pegtlparse.h"
 
 
 class BpfRule{

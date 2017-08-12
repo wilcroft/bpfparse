@@ -30,6 +30,7 @@
 #define SIZE_IPV4_ADDR 32
 #define SIZE_IPV_LEN 16
 #define SIZE_IPV6_ADDR 128
+#define SIZE_PORT 16
 
 /////////////////////////////////
 // Ethernet Frame Bits

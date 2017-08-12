@@ -112,6 +112,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\istring.cpp" />
     <ClCompile Include="..\pegtltest.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
@@ -124,6 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\eth_constants.h" />
+    <ClInclude Include="..\istring.h" />
     <ClInclude Include="..\predicate.h" />
     <ClInclude Include="..\ternary.h" />
   </ItemGroup>

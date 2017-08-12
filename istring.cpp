@@ -15,7 +15,12 @@ namespace istring {
 		string s(c);
 		return toLower(s) == toLower(*this);
 	}
-
+	bool istring::operator!=(string s) {
+		return !operator==(s);
+	}
+	bool istring::operator!=(const char c[]) {
+		return !operator==(c);
+	}
 	size_t istring::ifind(string s, size_t npos) {
 
 		if (s.length() < npos) return string::npos;
@@ -55,7 +60,8 @@ namespace istring {
 			while (!s.empty()) {
 				pos = s.ifind(token);
 				if (pos != 0)	l.push_back(s.substr(0, pos));
-				s.erase(0, pos + token.size());
+				if (pos !=s.npos) s.erase(0, pos + token.size());
+				else s.erase(0, s.npos);
 			}
 		}
 		return l;

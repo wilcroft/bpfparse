@@ -10,8 +10,10 @@ namespace istring {
 	public:
 
 		bool operator==(string s);
+		bool operator!=(string s);
 //		bool operator==(const char* c);
 		bool operator==(const char c[]);
+		bool operator!=(const char c[]);
 		istring();
 		istring(std::string s);
 		istring(char cp[]);

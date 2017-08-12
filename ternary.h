@@ -1,5 +1,11 @@
 #pragma once
 #include <cstdint>
+#include <vector>
+#include <bitset>
+
+namespace tern {
+
+#define MAX_VECTOR_SIZE 48
 
 class ternary {
 public:
@@ -21,3 +27,6 @@ public:
 	bool operator!=(const ternary& t);
 	bool operator!=(const bool& b);
 };
+
+void setVector(std::vector<ternary>& v, int i);
+}

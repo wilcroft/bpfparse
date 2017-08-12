@@ -1,7 +1,7 @@
 #include "rule.h"
 
 void BpfRule::addRule(enum BPFproto p, enum BPFdir d, enum BPFtype t, int v){
-	predlist.emplace_back(p,d,t,v);
+	predlist.emplace_back();// p, d, t, v);
 }
 
 void BpfRule::addRule(istring::istring s) {
@@ -39,20 +39,33 @@ void BpfRule::addRule(istring::istring s) {
 			toinsert.push_back(*it);
 			it = istring::replace(items, it, toinsert);
 		}
+		// expand undirected net 
+		else if ((*it == "net")	&& (it == items.begin() || *((--it)++) != "src" && *((--it)++) != "dst")) {
+			std::list<istring::istring> toinsert;
+			toinsert.push_back("(");
+			toinsert.push_back("src");
+			toinsert.push_back("net");
+			toinsert.push_back("or");
+			toinsert.push_back("dst");
+			toinsert.push_back("net");
+			toinsert.push_back(")");
+//			toinsert.push_back(*it);
+			it = istring::replace(items, it, toinsert);
+		}
 		// expand ip protocol type
 		else if ((*it == "tcp" || *it == "udp" || *it == "icmp")
 					&& (it == items.begin() || *((--it)++) != "proto")
 					&& (it == items.end() || *((++it)--) != "proto")) {
 			std::list<istring::istring> toinsert;
-			toinsert.push_back("(");
+//			toinsert.push_back("(");
 			toinsert.push_back("ip");
 			toinsert.push_back("proto");
 			toinsert.push_back(*it);
-			toinsert.push_back("or");
-			toinsert.push_back("ip6");
-			toinsert.push_back("proto");
-			toinsert.push_back(*it);
-			toinsert.push_back(")");
+//			toinsert.push_back("or");
+//			toinsert.push_back("ip6");
+//			toinsert.push_back("proto");
+//			toinsert.push_back(*it);
+//			toinsert.push_back(")");
 			it = istring::replace(items, it, toinsert);
 		}
 
@@ -77,25 +90,40 @@ void BpfRule::addRule(istring::istring s) {
 	}
 	stk.close();
 
+	std::cout << "#:" << stk.preds.size() << std::endl;
+	int idx=0;
 // Parse the terms
 	for (auto &i : stk.preds) {
+		std::string predstr ="";
 		for (auto& str : i) {
-			std::cout << str << " ";
+			//std::cout << str << " ";
+			predstr += str + " ";
 		}
-		std::cout << std::endl;
+		//std::cout << std::endl;
 
 		BpfPredicate pred;
-		std::list<std::string> preds;
-		preds.emplace_back("");
-		for (auto& str : i) {
-			if ((istring::istring)str == "and") preds.emplace_back("");
-			else preds.back() = preds.back() + " " + str;
+		state st;
+		pegtl::string_input<> rule_in(predstr, "s"+idx);
+		try {
+			//pegtl::parse< ruleparse::ipmatchold, ruleparse::action>(rule_in, pred, st);
+			pegtl::parse< ruleparse::findmatch, ruleparse::action>(rule_in, pred, st);
 		}
-		if (preds.back() == "") {
-			std::cerr << "Unexpected Error in rule parsing! Exiting..." << std::endl;
-			exit(-1);
+		catch (pegtl::parse_error& pe) {
+			std::cerr << pe.what();
+			std::cerr << std::endl;
 		}
-
+		idx++;
+		//std::list<std::string> preds;
+		//preds.emplace_back("");
+		//for (auto& str : i) {
+		//	if ((istring::istring)str == "and") preds.emplace_back("");
+		//	else preds.back() = preds.back() + " " + str;
+		//}
+		//if (preds.back() == "") {
+		//	std::cerr << "Unexpected Error in rule parsing! Exiting..." << std::endl;
+		//	exit(-1);
+		//}
+		//
 	}
 
 }

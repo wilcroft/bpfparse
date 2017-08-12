@@ -27,6 +27,9 @@
     <ClCompile Include="..\ternary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\istring.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\predicate.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\eth_constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\istring.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

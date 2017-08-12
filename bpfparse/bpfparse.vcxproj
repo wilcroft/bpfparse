@@ -74,6 +74,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>D:\programming\bpfparse\PEGTL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -120,6 +121,7 @@
   <ItemGroup>
     <ClInclude Include="..\eth_constants.h" />
     <ClInclude Include="..\istring.h" />
+    <ClInclude Include="..\pegtlparse.h" />
     <ClInclude Include="..\predicate.h" />
     <ClInclude Include="..\rule.h" />
     <ClInclude Include="..\stack.h" />

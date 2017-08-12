@@ -20,5 +20,8 @@ int main() {
 	l = istring::tokenize("Ifoomissedfooyoufoofoo!", "foo");
 	for (auto&s : l) std::cout << s << "=";
 	std::cout << std::endl;
+	l = istring::tokenize("192.168.0.145", ".");
+	for (auto&s : l) std::cout << s << "=";
+	std::cout << std::endl;
 	return 0;
 }
