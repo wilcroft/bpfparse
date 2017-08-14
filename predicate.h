@@ -79,6 +79,8 @@ public:
 	void addEProto(std::string& s);
 	void addIProto(std::string& s);
 
+	std::string tobits();
+
 private:
 	void addIP4addr(std::string& s, std::vector<ternary>& addr);
 	void addIP4mask(std::string& s, std::vector<ternary>& addr);

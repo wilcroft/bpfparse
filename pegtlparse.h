@@ -123,7 +123,7 @@ namespace ruleparse {
 	struct action<ip4> {
 		template <typename Input>
 		static void apply(const Input& in, BpfPredicate& p, struct state& st) {
-			std::cout << in.string();
+//			std::cout << in.string();
 			if (st.dir == BPFdirAND || st.dir == BPFdirDEST) p.addDestIP4addr(in.string());
 			if (st.dir == BPFdirAND || st.dir == BPFdirSRC) p.addSrcIP4addr(in.string());
 		}
@@ -132,7 +132,7 @@ namespace ruleparse {
 	struct action<ip4masknum> {
 		template <typename Input>
 		static void apply(const Input& in, BpfPredicate& p, struct state& st) {
-			std::cout << in.string();
+//			std::cout << in.string();
 			if (st.dir == BPFdirAND || st.dir == BPFdirDEST) p.addDestIP4mask(in.string());
 			if (st.dir == BPFdirAND || st.dir == BPFdirSRC) p.addSrcIP4mask(in.string());
 		}

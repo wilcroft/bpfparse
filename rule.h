@@ -2,6 +2,7 @@
 #include <list>
 #include <string>
 #include <iostream>
+#include <fstream>
 #include "predicate.h"
 #include "istring.h"
 #include "stack.h"
@@ -14,4 +15,5 @@ class BpfRule{
 public:
 	void addRule(enum BPFproto p, enum BPFdir d, enum BPFtype type, int value);
 	void addRule(istring::istring s);
+	void writeRulesToFile(std::string fname);
 };

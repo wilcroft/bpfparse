@@ -90,10 +90,11 @@ void BpfRule::addRule(istring::istring s) {
 	}
 	stk.close();
 
-	std::cout << "#:" << stk.preds.size() << std::endl;
+//	std::cout << "#:" << stk.preds.size() << std::endl;
 	int idx=0;
 // Parse the terms
 	for (auto &i : stk.preds) {
+		if (stk.preds.size() > 1) std::cout << "found " << stk.preds.size() << std::endl;
 		std::string predstr ="";
 		for (auto& str : i) {
 			//std::cout << str << " ";
@@ -112,6 +113,16 @@ void BpfRule::addRule(istring::istring s) {
 			std::cerr << pe.what();
 			std::cerr << std::endl;
 		}
+		if (pred.dir == BPFdirOR) {
+			BpfPredicate pred2 = pred;
+			std::string star = "*";
+			pred2.dir = BPFdirAND;
+			pred.dir = BPFdirAND;
+			pred.addSrcPort(star);
+			pred2.addDestPort(star);
+			predlist.push_back(pred2);
+		}
+		predlist.push_back(pred);
 		idx++;
 		//std::list<std::string> preds;
 		//preds.emplace_back("");
@@ -126,4 +137,25 @@ void BpfRule::addRule(istring::istring s) {
 		//
 	}
 
+}
+
+void BpfRule::writeRulesToFile(std::string fname) {
+	std::ofstream ofs;
+
+	ofs.open(fname, std::ofstream::out);
+
+	if (!ofs.is_open()) {
+		std::string msg = "Couldn't open file " + fname + " for writing.";
+		throw std::exception(msg.c_str());
+	}
+
+	int i = predlist.front().tobits().length();
+	ofs << ".i " << i << std::endl;
+	ofs << ".o " << 1 << std::endl;
+	ofs << ".type fdr" << std::endl;
+
+	for (auto& p : predlist)
+		ofs << p.tobits() << "\t1" << std::endl;
+
+	ofs.close();
 }

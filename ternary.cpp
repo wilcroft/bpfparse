@@ -41,6 +41,12 @@ namespace tern {
 		return b;
 	}
 
+	char ternary::ch() {
+		if (d == TERN_DC) return '-';
+		if (d == TERN_1) return '1';
+		return '0';
+	}
+
 	void setVector(std::vector<ternary>& v, int i) {
 		std::bitset<MAX_VECTOR_SIZE> b = i;
 		for (unsigned int idx = 0; idx < v.size(); idx++) {

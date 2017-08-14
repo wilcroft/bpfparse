@@ -9,7 +9,7 @@
 
 BpfPredicate::BpfPredicate() {
 	proto = BPFprotoAll;
-	dir = BPFdirOR;
+	dir = BPFdirAND;
 	type = BPFtypeHost;
 	value = 0;
 
@@ -79,9 +79,16 @@ void BpfPredicate::addIP4mask(std::string& s, std::vector<ternary>& addr) {
 }
 
 void BpfPredicate::addPort(std::string& s, std::vector<ternary>& port) {
-	std::bitset<SIZE_PORT> b = std::stoi(s);
-	for (int i = 0; i < SIZE_PORT; i++) {
-		port[i] = (bool)b[i];
+	if (s == "*") {
+		for (int i = 0; i < SIZE_PORT; i++) {
+			port[i] = ternary::TERN_DC;
+		}
+	}
+	else {
+		std::bitset<SIZE_PORT> b = std::stoi(s);
+		for (int i = 0; i < SIZE_PORT; i++) {
+			port[i] = (bool)b[i];
+		}
 	}
 }
 void BpfPredicate::addEProto(std::string& s) {
@@ -105,4 +112,30 @@ void BpfPredicate::addIProto(std::string& s) {
 		std::string msg = "Invalid IP Protocol " + s;
 		throw std::exception(msg.c_str());
 	}
+
+}
+
+std::string BpfPredicate::tobits() {
+	//need to do src IP, dest IP, sport, dport, eproto, irpoto,
+	std::string out;
+	std::vector<ternary>::reverse_iterator it;
+	for (it = src_ip_addr.rbegin(); it != src_ip_addr.rend(); it++) {
+		out += it->ch();
+	}
+	for (it = dest_ip_addr.rbegin(); it != dest_ip_addr.rend(); it++) {
+		out += it->ch();
+	}
+	for (it = src_port.rbegin(); it != src_port.rend(); it++) {
+		out += it->ch();
+	}
+	for (it = dest_port.rbegin(); it != dest_port.rend(); it++) {
+		out += it->ch();
+	}
+	for (it = ether_proto.rbegin(); it != ether_proto.rend(); it++) {
+		out += it->ch();
+	}
+	for (it = ip_proto.rbegin(); it != ip_proto.rend(); it++) {
+		out += it->ch();
+	}
+	return out;
 }

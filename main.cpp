@@ -7,6 +7,7 @@ int main(void){
 
 	std::ifstream ifs;
 	BpfRule rule;
+	//std::list<BpfRule> rules;
 	//rule.addRule("A and BC AND d and EFG");
 	//std::cout << std::endl;
 	//rule.addRule("A and ( B or C )");
@@ -38,9 +39,12 @@ int main(void){
 		std::getline(ifs, s);
 		i++;
 		double d = (double)i / 73352;
-		if (d == 0.25) std::cout << "25%";
-		if (d == 0.5) std::cout << "50%";
+		if (d == 0.25) std::cout << "25%" <<std::endl;
+		if (d == 0.5) std::cout << "50%" <<std::endl;
 	}
 
+	rule.writeRulesToFile("../testout");
+
+	ifs.close();
 	return 0;
 }

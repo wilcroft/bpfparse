@@ -26,6 +26,8 @@ public:
 	bool operator!=(const enum ternary_value& t);
 	bool operator!=(const ternary& t);
 	bool operator!=(const bool& b);
+
+	char ch();
 };
 
 void setVector(std::vector<ternary>& v, int i);
