@@ -36,9 +36,12 @@ namespace ruleparse {
 	struct mpls : pegtl::istring <'m', 'p', 'l', 's' > {};
 	struct icmp : pegtl::istring <'i', 'c', 'm', 'p' > {};
 	struct vlan : pegtl::istring <'v', 'l', 'a', 'n' > {};
-	struct proto : pegtl::istring<'p', 'r', 'o', 't', 'o'> {};
-	struct ether : pegtl::istring<'e', 't', 'h', 'e', 'r'> {};
-	struct port : pegtl::istring<'p', 'o', 'r', 't'> {};
+	struct proto : pegtl::istring <'p', 'r', 'o', 't', 'o'> {};
+	struct ether : pegtl::istring <'e', 't', 'h', 'e', 'r'> {};
+	struct port : pegtl::istring <'p', 'o', 'r', 't'> {};
+	struct iface : pegtl::istring <'i', 'f', 'a', 'c', 'e'> {};
+	struct in : pegtl::istring <'i', 'n'> {};
+	struct out : pegtl::istring <'o', 'u', 't'> {};
 
 	//check for src or dst
 	struct srcdst : pegtl::opt <pegtl::sor <src, dst>, pegtl::plus<ws> > {};
@@ -51,7 +54,7 @@ namespace ruleparse {
 	struct ip4 : pegtl::must<wildnum, pegtl::one<'.'>, wildnum, pegtl::one<'.'>, wildnum, pegtl::one<'.'>, wildnum> {};
 	struct ip4masknum : pegtl::plus<pegtl::digit> {};
 	struct ip4mask : pegtl::seq<pegtl::one<'/'>, pegtl::opt<ws>, ip4masknum > {};
-	struct netmatch : pegtl::seq<srcdst, net, ws, ip4, pegtl::opt<ws, ip4mask> > {};
+	struct netmatch : pegtl::seq<srcdst, net, ws, ip4, pegtl::opt<pegtl::opt<ws>, ip4mask> > {};
 
 	//match ether proto
 	struct eproto : pegtl::sor<ip, ip6, arp, rarp, mpls, vlan> {};
@@ -60,6 +63,11 @@ namespace ruleparse {
 	//match ip proto
 	struct iproto : pegtl::sor<tcp, udp, icmp> {};
 	struct iprotomatch : pegtl::seq<ip, ws, proto, ws, iproto> {};
+
+	struct iniface : pegtl::seq<in, ws, iface> {};
+	struct outiface : pegtl::seq<out, ws, iface> {};
+	struct inifacematch : pegtl::seq<iniface, ws, pegtl::plus<pegtl::digit>> {};
+	struct outifacematch : pegtl::seq<outiface, ws, pegtl::plus<pegtl::digit>> {};
 
 	//matchany
 	struct matchable : pegtl::sor <iprotomatch, eprotomatch, netmatch, portmatch, and> {};

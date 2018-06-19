@@ -61,6 +61,7 @@ public:
 	std::vector<ternary> ip_proto;
 	std::vector<ternary> src_port;
 	std::vector<ternary> dest_port;
+	std::vector<ternary> out_iface;
 	short length;
 
 
@@ -80,6 +81,8 @@ public:
 	void addIProto(std::string& s);
 
 	std::string tobits();
+	std::string tobits_old();
+	std::vector<ternary> concat();
 
 private:
 	void addIP4addr(std::string& s, std::vector<ternary>& addr);

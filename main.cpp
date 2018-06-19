@@ -1,5 +1,6 @@
 #include "rule.h"
 #include "predicate.h"
+#include "matchtreenode.h"
 #include <string>
 #include <fstream>
 
@@ -7,6 +8,7 @@ int main(void){
 
 	std::ifstream ifs;
 	BpfRule rule;
+
 	//std::list<BpfRule> rules;
 	//rule.addRule("A and BC AND d and EFG");
 	//std::cout << std::endl;
@@ -27,6 +29,7 @@ int main(void){
 	//rule.addRule("UDP port 5060 and ip and (dst net 160.96.0.0/12)");
 	//std::cout << std::endl;
 	//rule.addRule("UDP port 5060 and ip and (net 160.96.0.0/12)");
+	//rule.addRule("UDP port 5060 and ip and (net 160.96.0.0/12)");
 
 	ifs.open("../rules", std::ifstream::in);
 
@@ -43,7 +46,11 @@ int main(void){
 		if (d == 0.5) std::cout << "50%" <<std::endl;
 	}
 
-	rule.writeRulesToFile("../testout");
+	MatchTreeNode treenode(&rule);
+
+	std::cout << treenode.getDepth() << std::endl;
+	std::cout << treenode.nodeCount() << std::endl;
+	//rule.writeRulesToFile("../allrules.pla");
 
 	ifs.close();
 	return 0;

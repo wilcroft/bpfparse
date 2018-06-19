@@ -3,6 +3,8 @@
 #include <vector>
 #include <map>
 
+#define SIZE_IFACE_INDEX 2
+
 // ether, fddi, tr, wlan, ip, ip6, arp, rarp, decnet, tcp and udp
 // Ethernet Protocol reference numbers
 #define ETHER_IPV4	0x0800

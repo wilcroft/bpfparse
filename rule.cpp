@@ -1,5 +1,14 @@
 #include "rule.h"
 
+BpfRule::BpfRule() {};
+
+BpfRule::BpfRule(std::list<BpfPredicate *> l) {
+	for (auto& i : l) {
+		predlist.push_back(*i);
+	}
+}
+
+
 void BpfRule::addRule(enum BPFproto p, enum BPFdir d, enum BPFtype t, int v){
 	predlist.emplace_back();// p, d, t, v);
 }
@@ -150,10 +159,11 @@ void BpfRule::writeRulesToFile(std::string fname) {
 	}
 
 	int i = predlist.front().tobits().length();
+
 	ofs << ".i " << i << std::endl;
 	ofs << ".o " << 1 << std::endl;
-	ofs << ".type fdr" << std::endl;
-
+	ofs << ".type f" << std::endl;
+	//ofs << std::string(i,'-') << "\t0" << std::endl;
 	for (auto& p : predlist)
 		ofs << p.tobits() << "\t1" << std::endl;
 

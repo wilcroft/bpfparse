@@ -22,6 +22,7 @@ BpfPredicate::BpfPredicate() {
 	ip_proto.resize(SIZE_IPV_PROTO);
 	src_port.resize(SIZE_PORT);
 	dest_port.resize(SIZE_PORT);
+	out_iface.resize(SIZE_IFACE_INDEX);
 }
 
 void BpfPredicate::addDestIP4addr(std::string& s) {
@@ -115,7 +116,7 @@ void BpfPredicate::addIProto(std::string& s) {
 
 }
 
-std::string BpfPredicate::tobits() {
+std::string BpfPredicate::tobits_old() {
 	//need to do src IP, dest IP, sport, dport, eproto, irpoto,
 	std::string out;
 	std::vector<ternary>::reverse_iterator it;
@@ -137,5 +138,26 @@ std::string BpfPredicate::tobits() {
 	for (it = ip_proto.rbegin(); it != ip_proto.rend(); it++) {
 		out += it->ch();
 	}
+	return out;
+}
+
+std::string BpfPredicate::tobits() {
+	std::vector<ternary> c = concat();
+	std::vector<ternary>::reverse_iterator it;
+	std::string out;
+	for (it = c.rbegin(); it != c.rend(); it++)
+		out += it->ch();
+	return out;
+}
+
+std::vector<ternary> BpfPredicate::concat() {
+	std::vector<ternary> out;
+	std::vector<ternary>::reverse_iterator it;
+	out.insert(out.end(), ip_proto.begin(), ip_proto.end());
+	out.insert(out.end(), ether_proto.begin(), ether_proto.end());
+	out.insert(out.end(), dest_port.begin(), dest_port.end());
+	out.insert(out.end(), src_port.begin(), src_port.end());
+	out.insert(out.end(), dest_ip_addr.begin(), dest_ip_addr.end());
+	out.insert(out.end(), src_ip_addr.begin(), src_ip_addr.end());
 	return out;
 }
